@@ -69,6 +69,7 @@ export type GraphWrapperProps = Pick<
 	| 'windowFocused'
 	| 'refsMetadata'
 	| 'includeOnlyRefs'
+	| 'pinnedRef'
 	| 'rowsStats'
 	| 'rowsStatsLoading'
 	| 'workingTreeStats'
@@ -151,6 +152,7 @@ const createIconElements = (): Record<ExternalIconKeys | 'undefined-icon', React
 		'changes',
 		'files',
 		'worktree',
+		'pin',
 		'issue-github',
 		'issue-githubEnterprise',
 		'issue-gitlab',
@@ -850,6 +852,7 @@ export const GlGraphReact = memo((initProps: GraphWrapperInitProps) => {
 			isLoadingRows={props.loading}
 			isSelectedBySha={props.selectedRows}
 			nonce={props.nonce}
+			pinnedBranchFullName={props.pinnedRef?.id ?? null}
 			onColumnResized={handleOnColumnResized}
 			onDoubleClickGraphRow={handleOnDoubleClickRow}
 			onDoubleClickGraphRef={handleOnDoubleClickRef}

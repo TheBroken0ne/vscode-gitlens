@@ -199,6 +199,7 @@ export interface State extends WebviewState<'gitlens.graph' | 'gitlens.views.gra
 	excludeRefs?: GraphExcludeRefs;
 	excludeTypes?: GraphExcludeTypes;
 	includeOnlyRefs?: GraphIncludeOnlyRefs;
+	pinnedRef?: GraphPinnedRef;
 	featurePreview?: FeaturePreview;
 	orgSettings?: { ai: boolean; drafts: boolean };
 	overview?: GraphOverviewData;
@@ -319,6 +320,7 @@ export type GraphExcludedRef = GraphRefOptData;
 export type GraphExcludeTypes = ExcludeByType;
 export type GraphIncludeOnlyRefs = IncludeOnlyRefsById;
 export type GraphIncludeOnlyRef = GraphRefOptData;
+export type GraphPinnedRef = GraphRefOptData & { sha?: string };
 
 export type GraphColumnName = GraphZoneType;
 export type GraphRowStats = RowStats;
@@ -393,6 +395,11 @@ export interface UpdateRefsVisibilityParams {
 	visible: boolean;
 }
 export const UpdateRefsVisibilityCommand = new IpcCommand<UpdateRefsVisibilityParams>(scope, 'refs/update/visibility');
+
+export interface UpdatePinnedRefParams {
+	ref: GraphPinnedRef | null;
+}
+export const UpdatePinnedRefCommand = new IpcCommand<UpdatePinnedRefParams>(scope, 'refs/update/pinned');
 
 export interface UpdateExcludeTypesParams {
 	key: keyof GraphExcludeTypes;
@@ -803,6 +810,14 @@ export interface DidChangeRefsVisibilityParams {
 export const DidChangeRefsVisibilityNotification = new IpcNotification<DidChangeRefsVisibilityParams>(
 	scope,
 	'refs/didChangeVisibility',
+);
+
+export interface DidChangePinnedRefParams {
+	pinnedRef?: GraphPinnedRef;
+}
+export const DidChangePinnedRefNotification = new IpcNotification<DidChangePinnedRefParams>(
+	scope,
+	'refs/didChangePinned',
 );
 
 export interface DidChangeRowsParams {
