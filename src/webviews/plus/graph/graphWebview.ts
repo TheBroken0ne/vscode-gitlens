@@ -295,7 +295,6 @@ import {
 	DidChangeWipStaleNotification,
 	DidChangeWorkingTreeNotification,
 	DidFetchNotification,
-	DidRequestInspectNotification,
 	DidSearchNotification,
 	DidStartFeaturePreviewNotification,
 	DoubleClickedCommand,
@@ -6054,16 +6053,6 @@ export class GraphWebviewProvider implements WebviewProvider<State, State, Graph
 		return executeCommand<CopyShaToClipboardCommandArgs, void>('gitlens.copyShaToClipboard', {
 			sha: sha,
 		});
-	}
-
-	@command('gitlens.graph.showInDetailsView')
-	@debug()
-	private openInDetailsView(item?: GraphItemContext) {
-		const ref = this.getGraphItemRef(item, 'revision');
-		if (ref == null) return Promise.resolve();
-
-		// Open in the embedded details panel
-		return this.host.notify(DidRequestInspectNotification, { sha: ref.ref, repoPath: ref.repoPath });
 	}
 
 	@command('gitlens.graph.commitViaSCM')

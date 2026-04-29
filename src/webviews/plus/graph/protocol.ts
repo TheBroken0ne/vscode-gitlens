@@ -834,12 +834,6 @@ export const DidChangeSelectionNotification = new IpcNotification<DidChangeSelec
 	'selection/didChange',
 );
 
-export interface DidRequestInspectParams {
-	sha: string;
-	repoPath: string;
-}
-export const DidRequestInspectNotification = new IpcNotification<DidRequestInspectParams>(scope, 'inspect/didRequest');
-
 export interface DidChangeWorkingTreeParams {
 	stats: WorkDirStats;
 	wipMetadataBySha?: GraphWipMetadataBySha;
